@@ -44,7 +44,7 @@ function App(): React.JSX.Element {
       
       let newcomment:CommentType = {...comment};
       if(!newcomment.replies) newcomment.replies = [];
-      if(!newcomment.replayingTo) newcomment.replayingTo= null;
+      if(!newcomment.replyingTo) newcomment.replyingTo= null;
       let user0 = users.find(user => user.username === username);
       if(user0) newcomment.user = user0;
       if(comment.replies) {
@@ -57,22 +57,6 @@ function App(): React.JSX.Element {
     }
     const comments: CommentType[] = [];
     for(let comment of data.comments) {
-      // const username = comment.user.username;
-      
-      // let newcomment:CommentType = {...comment};
-      // if(!newcomment.replies) newcomment.replies = [];
-      // if(!newcomment.replayingTo) newcomment.replayingTo= null;
-      // let user0 = users.find(user => user.username === username);
-      // if(user0) newcomment.user = user0;
-      // for(let i = 0; i < comment.replies.length; i++) {
-      //   let reply = comment.replies[i];
-      //   if(!reply.replies) reply.replies = [];
-      //   let replier = users.find(user => user.username === reply.user.username);
-      //   //console.log('normalizeData', replier, reply, users)
-      //   newcomment.replies[i] = {...reply, user: replier}
-      //   newcomment.replies[i].replayingTo = newcomment.user;
-      // }
-
       comments.push(normalizeComment(comment));
     }
 
@@ -81,7 +65,8 @@ function App(): React.JSX.Element {
 
   const [comments, setComments] = useState<CommentType[]>([]);
   const [users, setUsers] = useState<UserType[]>([]);
-  const [currentUser, setCurrentUser] = useState<UserType>(); //({image: {png: '', webp: ''}, username: ''});
+  const [currentUser, setCurrentUser] = useState<UserType>(defaultUser);
+  const [flatComments, setFlatComments] = useState<CommentType[]>([]);
 
   useEffect(()=>{
     fetch(staticAsset('/data.json'))
@@ -103,14 +88,15 @@ function App(): React.JSX.Element {
   }, [])
 
   useEffect(()=>{
-    //console.log('users', users);
     console.log('comments', comments);
-    //console.log('currentUser', currentUser);
   }, [comments])
+  useEffect(()=>{
+    console.log('flat comments', flatComments);
+  }, [flatComments])
 
   return (
     <>
-      <CommentContext.Provider value={{comments, setComments, users, setUsers, currentUser, setCurrentUser}}>
+      <CommentContext.Provider value={{comments, setComments, users, setUsers, currentUser, setCurrentUser, flatComments, setFlatComments}}>
         <CommentsContainer />
       </CommentContext.Provider>
     </>

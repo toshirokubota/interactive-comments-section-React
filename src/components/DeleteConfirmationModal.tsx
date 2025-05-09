@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import type { CommentContextType, CommentType } from "../types";
 import { CommentContext } from "../App";
+import { recursiveSearch } from "../libs";
 
 
 export default function DeleteConfirmationModal({comment, setDeleteComment}
@@ -12,24 +13,34 @@ export default function DeleteConfirmationModal({comment, setDeleteComment}
     const {setComments}=useContext<CommentContextType>(CommentContext);
 
     function deleteComment(comment: CommentType) {
-        function recursiveSearchAndDeleteion(comments: CommentType[], comment: CommentType) {
-            if(comments) {
-                for(let i=0; i < comments.length; ++i) {
-                    comments[i].replies = recursiveSearchAndDeleteion(comments[i].replies, comment);
-                }
-                let idx = comments.findIndex(x => x === comment);
-                console.log('deleteComment:', idx)
-                if(idx >= 0) {
-                    console.log('deleting...', comment)
-                    return [...comments.slice(0, idx), ...comments.slice(idx + 1)];
-                } else {
-                    return [...comments];
-                }
-            }
-            return comments;
-        }
+        // function recursiveSearchAndDeleteion(comments: CommentType[], comment: CommentType) {
+        //     if(comments) {
+        //         for(let i=0; i < comments.length; ++i) {
+        //             comments[i].replies = recursiveSearchAndDeleteion(comments[i].replies, comment);
+        //         }
+        //         let idx = comments.findIndex(x => x === comment);
+        //         console.log('deleteComment:', idx)
+        //         if(idx >= 0) {
+        //             console.log('deleting...', comment)
+        //             return [...comments.slice(0, idx), ...comments.slice(idx + 1)];
+        //         } else {
+        //             return [...comments];
+        //         }
+        //     }
+        //     return comments;
+        // }
         setDeleteComment(false);
-        setComments(prev => recursiveSearchAndDeleteion(prev, comment));
+        setComments(prev => {
+            const arr = recursiveSearch(prev, comment);
+            const idx = arr.findIndex(x => x === comment);
+            if(idx >= 0) {
+                console.log('delete: find the containing array', arr);
+                arr.splice(idx, 1);
+                //arr = [...arr.slice(0, idx), ...arr.slice(idx + 1)];
+                return [...prev];
+            }
+            else return prev;
+        });
     }
     return (
         <div className="lightbox">

@@ -16,3 +16,18 @@ export function collectUniqueUsers(comments: CommentType[]): UserType[] {
 
     return uniqueUsers;
 }
+
+/*
+Look for the given COMMENT in a nested array of COMMENTS and returns the array
+that contains COMMENT.
+*/
+export function recursiveSearch(comments: CommentType[], comment: CommentType): CommentType[] {
+    for(let i=0; i < comments.length; ++i) {
+        const arr = recursiveSearch(comments[i].replies, comment);
+        if(arr.length > 0) return arr;
+    }
+    let idx = comments.findIndex(x => x === comment);
+    if(idx >= 0) return comments;
+    else return [];
+}
+

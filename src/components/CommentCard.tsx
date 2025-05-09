@@ -3,7 +3,7 @@ import { staticAsset } from "../libs";
 import type { CommentContextType, CommentType, UserType } from "../types";
 import UpDownVoter from "./UpDownVoter";
 import { CommentContext } from "../App";
-import ReplyToCommentCard from "./ReplayToCommentCard";
+import ReplyToCommentCard from "./ReplyToCommentCard";
 import EditCommentCard from "./EditCommentCard";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 

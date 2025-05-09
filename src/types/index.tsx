@@ -6,20 +6,22 @@ export type CommentType = {
     score: number,
     user: UserType,
     replies: CommentType[],
-    replayingTo: UserType | null
+    replyingTo: UserType | null,
 }
 
 export type UserType = {
     image: {png: string, webp: string},
-    username: string
+    username: string,
 }
 
 export interface CommentContextType {
     comments: CommentType[],
     users: UserType[],
-    setComments: React.Dispatch<React.SetStateAction<CommentType[]>>
-    setUsers: React.Dispatch<React.SetStateAction<UserType[]>>
-    currentUser?: UserType,
-    setCurrentUser: React.Dispatch<React.SetStateAction<UserType | undefined>>
+    setComments: React.Dispatch<React.SetStateAction<CommentType[]>>,
+    setUsers: React.Dispatch<React.SetStateAction<UserType[]>>,
+    currentUser: UserType,
+    setCurrentUser: React.Dispatch<React.SetStateAction<UserType>>,
+    flatComments: CommentType[],
+    setFlatComments: React.Dispatch<React.SetStateAction<CommentType[]>>,
 }
 
