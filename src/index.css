@@ -29,6 +29,12 @@
 .bg-very-light-gray {
   background-color: var(--color-very-light-gray);
 }
+.bg-grayish-blue {
+  background-color: var(--color-grayish-blue);
+}
+.bg-soft-red {
+  background-color: var(--color-soft-red);
+}
 .fg-light-grayish-blue {
   color: var(--color-light-grayish-blue);
 }

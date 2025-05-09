@@ -9,7 +9,7 @@ export default function ReplyToCommentCard({comment, setReplyToComment}:
         setReplyToComment: React.Dispatch<React.SetStateAction<boolean>>
     }): React.JSX.Element {
 
-    const {currentUser, setComments, setFlatComments}=useContext<CommentContextType>(CommentContext);
+    const {currentUser, setComments, nextId, setNextId}=useContext<CommentContextType>(CommentContext);
     const [message, setMessage] = useState<string>('@' + comment.user.username + ' '    );
     
     function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -25,7 +25,7 @@ export default function ReplyToCommentCard({comment, setReplyToComment}:
         //const name = (event.nativeEvent.submitter as HTMLButtonElement).name;
         if(button.name === 'Confirm' ) {
             const reply: CommentType = {
-                id: Math.floor(Math.random() * 1000), //pseudo random number, temporary fix
+                id: nextId,
                 user: currentUser, 
                 content: message, 
                 score: 0,
@@ -33,35 +33,11 @@ export default function ReplyToCommentCard({comment, setReplyToComment}:
                 replies: [],
                 replyingTo: comment.user
             };
-
+            setNextId(prev => prev + 1);
+            
             setComments(prev=> updateCommentRecursively(prev, comment, (c)=>{
                 return {...c, replies: [...c.replies, reply]}
             }));
-            
-            // const addReplyRecursively = (comments: CommentType[], targetComment: CommentType, reply: CommentType): CommentType[] => {
-            //     return comments.map(comment =>
-            //       comment === targetComment
-            //         ? { ...comment, replies: [...comment.replies, reply] } // Found the target, add reply
-            //         : { ...comment, replies: addReplyRecursively(comment.replies, targetComment, reply) } // Recursively search in replies
-            //     );
-            //   };
-            // setComments(prev => addReplyRecursively(prev, comment, reply));
-
-            // setComments(prev =>
-            //     prev.map(c =>
-            //       c === comment // Finding the comment to update
-            //         ? { ...c, replies: [...c.replies, reply] } // Creating new reply array
-            //         : c
-            //     )
-            //   );
-              
-            // setComments(prev => {
-            //     reply.id = Math.floor(Math.random() * 1000);
-            //     comment.replies.push(reply);
-            //     console.log('added reply = ', reply, 'to comment = ', comment);
-            //     return [...prev];
-            // });
-            setFlatComments(prev => {return [...prev, reply];});
         } 
         setReplyToComment(false);        
     }

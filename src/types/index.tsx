@@ -21,7 +21,7 @@ export interface CommentContextType {
     setUsers: React.Dispatch<React.SetStateAction<UserType[]>>,
     currentUser: UserType,
     setCurrentUser: React.Dispatch<React.SetStateAction<UserType>>,
-    flatComments: CommentType[],
-    setFlatComments: React.Dispatch<React.SetStateAction<CommentType[]>>,
+    nextId: number,
+    setNextId: React.Dispatch<React.SetStateAction<number>>,
 }
 

@@ -4,7 +4,6 @@ import type { CommentContextType, CommentType, UserType } from "../types";
 import UpDownVoter from "./UpDownVoter";
 import { CommentContext } from "../App";
 import ReplyToCommentCard from "./ReplyToCommentCard";
-import EditCommentCard from "./EditCommentCard";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
 export default function CommentCard({comment, currentUser}:
@@ -20,22 +19,9 @@ export default function CommentCard({comment, currentUser}:
     const [replayToComment, setReplyToComment] = useState<boolean>(false);
     const [message, setMessage] = useState<string>(comment.content);
     useEffect(()=>{
-        // const updateScoreRecursively = (comments: CommentType[], targetComment: CommentType, count: number): CommentType[] => {
-        //     return comments.map(comment =>
-        //         comment === targetComment
-        //         ? { ...comment, count } // Found the target, add reply
-        //         : { ...comment, replies: updateScoreRecursively(comment.replies, targetComment, count) } // Recursively search in replies
-        //     );
-        // };
-
-        // setComments(prev=> updateScoreRecursively(prev, comment, count))
-
         setComments(prev=> updateCommentRecursively(prev, comment, (c)=>{
-            console.log('updating count ', count)
             return {...c, score:count}
         }));
-
-
     }, [count])
 
     function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -43,13 +29,6 @@ export default function CommentCard({comment, currentUser}:
         setMessage(value);
     }
     function updateComment() {
-        // const updateContentRecursively = (comments: CommentType[], targetComment: CommentType, content: string): CommentType[] => {
-        //     return comments.map(comment =>
-        //         comment === targetComment
-        //         ? { ...comment, content } // Found the target, add reply
-        //         : { ...comment, replies: updateContentRecursively(comment.replies, targetComment, content) } // Recursively search in replies
-        //     );
-        // };
         setComments(prev=> updateCommentRecursively(prev, comment, (c)=>{
             return {...c, content:message}
         }));
@@ -125,7 +104,6 @@ export default function CommentCard({comment, currentUser}:
                 </textarea>
             </div>
             {deleteComment && <DeleteConfirmationModal comment={comment} setDeleteComment={setDeleteComment}/>}
-            {/* {editComment && <EditCommentCard comment={comment} setEditComment={setEditComment}/>} */}
             {replayToComment && <ReplyToCommentCard comment={comment} setReplyToComment={setReplyToComment}/>}
 
             <div>

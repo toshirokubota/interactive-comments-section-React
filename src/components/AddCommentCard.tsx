@@ -5,7 +5,7 @@ import { CommentContext } from "../App";
 
 
 export default function AddCommentCard(): React.JSX.Element {
-    const {currentUser, setComments}=useContext<CommentContextType>(CommentContext);
+    const {currentUser, setComments, nextId, setNextId}=useContext<CommentContextType>(CommentContext);
     const [message, setMessage] = useState<string>('');
 
     function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -18,7 +18,7 @@ export default function AddCommentCard(): React.JSX.Element {
 
         const button = event.nativeEvent.submitter as HTMLButtonElement;
         const newcomment: CommentType = {
-            id: Math.floor(Math.random() * 1000), //pseudo random number, temporary fix
+            id: nextId,
             user: currentUser, 
             content: message, 
             score: 0,
@@ -26,7 +26,7 @@ export default function AddCommentCard(): React.JSX.Element {
             replies: [],
             replyingTo: null
         };
-
+        setNextId(prev => prev + 1);
         if(button.name === 'Confirm' ) {
             setComments(prev => [...prev, newcomment]);
         } 
@@ -34,16 +34,21 @@ export default function AddCommentCard(): React.JSX.Element {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <img src={staticAsset(currentUser.image.webp.slice(1))} alt={'avatar of ' + currentUser.username} className="avatar"/>
-            <label htmlFor="add-comment" className="sr-only">Edit Comment</label>
-            <textarea id='add-comment' 
-                rows={5} cols={30} 
-                value={message}
-                onChange={handleChange}>                
-            </textarea>
-            <button className="px-4" name="Confirm">Send</button>
-            <button className="px-4" name="Cancel">Cancel</button>
-        </form>
+        <section className="comment">
+            <form onSubmit={handleSubmit} className="card-grid">
+                <img src={staticAsset(currentUser.image.webp.slice(1))} 
+                    alt={'avatar of ' + currentUser.username} 
+                    className="avatar comment-header"/>
+                <label htmlFor="add-comment" className="sr-only">Edit Comment</label>
+                <textarea id='add-comment' 
+                    className="comment-content"
+                    rows={5} cols={30} 
+                    value={message}
+                    onChange={handleChange}>                
+                </textarea>
+                <button className="round-button bg-soft-red text-white" name="Confirm">Send</button>
+                <button className="round-button bg-grayish-blue text-white" name="Cancel">Cancel</button>
+            </form>
+        </section>
     )
 }
