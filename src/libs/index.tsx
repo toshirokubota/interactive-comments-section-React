@@ -31,3 +31,14 @@ export function recursiveSearch(comments: CommentType[], comment: CommentType): 
     else return [];
 }
 
+export const updateCommentRecursively = (comments: CommentType[], 
+        targetComment: CommentType,
+        callback: (comment: CommentType)=> CommentType): CommentType[] => {
+
+        return comments.map(comment =>
+            comment === targetComment
+            ? callback(comment)
+            : { ...comment, replies: updateCommentRecursively(comment.replies, targetComment, callback) } 
+        );
+};
+

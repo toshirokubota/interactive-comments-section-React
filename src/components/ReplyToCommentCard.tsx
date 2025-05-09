@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import type { CommentContextType, CommentType } from "../types";
-import { staticAsset } from "../libs";
+import { staticAsset, updateCommentRecursively } from "../libs";
 import { CommentContext } from "../App";
 
 export default function ReplyToCommentCard({comment, setReplyToComment}: 
@@ -25,24 +25,27 @@ export default function ReplyToCommentCard({comment, setReplyToComment}:
         //const name = (event.nativeEvent.submitter as HTMLButtonElement).name;
         if(button.name === 'Confirm' ) {
             const reply: CommentType = {
-                id: 0, //Math.floor(Math.random() * 1000), //pseudo random number, temporary fix
+                id: Math.floor(Math.random() * 1000), //pseudo random number, temporary fix
                 user: currentUser, 
                 content: message, 
                 score: 0,
-                createdAt: Date.now().toString(),
+                createdAt: 'Now',
                 replies: [],
                 replyingTo: comment.user
             };
 
-            const addReplyRecursively = (comments: CommentType[], targetComment: CommentType, reply: CommentType): CommentType[] => {
-                return comments.map(comment =>
-                  comment === targetComment
-                    ? { ...comment, replies: [...comment.replies, reply] } // Found the target, add reply
-                    : { ...comment, replies: addReplyRecursively(comment.replies, targetComment, reply) } // Recursively search in replies
-                );
-              };
-              
-            setComments(prev => addReplyRecursively(prev, comment, reply));
+            setComments(prev=> updateCommentRecursively(prev, comment, (c)=>{
+                return {...c, replies: [...c.replies, reply]}
+            }));
+            
+            // const addReplyRecursively = (comments: CommentType[], targetComment: CommentType, reply: CommentType): CommentType[] => {
+            //     return comments.map(comment =>
+            //       comment === targetComment
+            //         ? { ...comment, replies: [...comment.replies, reply] } // Found the target, add reply
+            //         : { ...comment, replies: addReplyRecursively(comment.replies, targetComment, reply) } // Recursively search in replies
+            //     );
+            //   };
+            // setComments(prev => addReplyRecursively(prev, comment, reply));
 
             // setComments(prev =>
             //     prev.map(c =>

@@ -36,7 +36,6 @@ export default function DeleteConfirmationModal({comment, setDeleteComment}
             if(idx >= 0) {
                 console.log('delete: find the containing array', arr);
                 arr.splice(idx, 1);
-                //arr = [...arr.slice(0, idx), ...arr.slice(idx + 1)];
                 return [...prev];
             }
             else return prev;

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { CommentContext } from '../App';
 import type { CommentContextType } from '../types';
 import CommentCard from './CommentCard';
+import AddCommentCard from './AddCommentCard';
 
 
 export default function CommentsContainer(): React.JSX.Element {
@@ -22,6 +23,7 @@ export default function CommentsContainer(): React.JSX.Element {
                     <CommentCard key={comment.id} comment={comment} currentUser={currentUser} />
                 )
             }
+            <AddCommentCard />
         </div>
     )
 }
