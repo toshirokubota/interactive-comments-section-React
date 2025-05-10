@@ -1,7 +1,5 @@
 import React from "react";
 
-import { staticAsset } from "../libs";
-
 export default function UpDownVoter({count, setCount}:
     {
         count: number,
@@ -9,7 +7,7 @@ export default function UpDownVoter({count, setCount}:
     }
 ): React.JSX.Element {
     return (
-        <div className="updownvoter flex gap-4 items-center px-2 w-fit rounded-md bg-very-light-gray">
+        <div className="updownvoter flex flex-row md:flex-col gap-4 items-center px-2 w-fit rounded-md bg-very-light-gray">
             <button 
                 className="fg-moderate-blue icon"
                 onClick={()=>setCount(prev => prev + 1)}

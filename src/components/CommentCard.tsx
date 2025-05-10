@@ -34,6 +34,23 @@ export default function CommentCard({comment, currentUser}:
         }));
     }
 
+    function styleMessage(message: string): React.JSX.Element {
+        const replyingTo:UserType|null = comment.replyingTo; 
+        if(replyingTo) {
+            const searchStr:string = '@' + replyingTo.username;
+            const idx: number = message.indexOf(searchStr);
+            if(idx >= 0) {
+                return (
+                    <>
+                        <span>{message.slice(0,idx)}</span>
+                        <span className="fg-moderate-blue">{message.slice(idx, idx+searchStr.length)}</span>
+                        <span>{message.slice(idx + searchStr.length)}</span>
+                    </>
+                );
+            }
+        } 
+        return <span>{message}</span>;
+    }
 
     return (
         <section className="comment">
@@ -58,7 +75,7 @@ export default function CommentCard({comment, currentUser}:
                     {comment.user.username === currentUser.username ? 
                         editComment ?
                             <>
-                                <button className="fg-soft-red px-4" onClick={() => updateComment()}>
+                                <button className="fg-soft-red px-4" onClick={() => {updateComment(); setEditComment(false);}}>
                                     <img src={staticAsset('/images/icon-delete.svg')} alt="delete icon" 
                                         className="icon"
                                         />
@@ -95,13 +112,23 @@ export default function CommentCard({comment, currentUser}:
                         </button>
                 }
                 </div>
-                <textarea 
-                    className="comment-content fg-grayish-blue" 
-                    disabled={!editComment}
-                    value={message}
-                    rows={5}
-                    onChange={handleChange}>
-                </textarea>
+                {editComment ? 
+                    // <textarea 
+                    //     className="comment-content fg-grayish-blue" 
+                    //     //disabled={!editComment}
+                    //     value={message}
+                    //     rows={5}
+                    //     onChange={handleChange}>
+                    // </textarea>
+                    <p className="comment-content fg-grayish-blue"
+                        contentEditable={true}>
+                        {styleMessage(message)}
+                    </p>
+                    :
+                    <p className="comment-content fg-grayish-blue">
+                        {styleMessage(message)}
+                    </p>
+                }
             </div>
             {deleteComment && <DeleteConfirmationModal comment={comment} setDeleteComment={setDeleteComment}/>}
             {replayToComment && <ReplyToCommentCard comment={comment} setReplyToComment={setReplyToComment}/>}

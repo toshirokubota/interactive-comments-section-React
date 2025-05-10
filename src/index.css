@@ -59,9 +59,13 @@
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  display: grid;
+  place-content: center;
   min-width: 320px;
   min-height: 100vh;
+  max-width: 800px;
+} 
+#root {
+  margin-inline: auto;
 }
 

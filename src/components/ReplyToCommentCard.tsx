@@ -43,19 +43,24 @@ export default function ReplyToCommentCard({comment, setReplyToComment}:
     }
 
     return (
-        <form onSubmit={(e)=> {handleSubmit(e);}}>
-            <img src={staticAsset(currentUser.image.webp.slice(1))} alt={'avatar of ' + currentUser.username} className="avatar"/>
-            <label htmlFor="reply-comment" className="sr-only">Reply to Comment</label>
-            <textarea id='reply-comment' 
-                rows={5} cols={30}
-                value={message}
-                onChange={handleChange}
-            >                
-            </textarea>
-            <div className="action-buttons">
-                <button className="rounded-button bg-moderate-blue text-white" name='Confirm'>Reply</button>
-                <button className="rounded-button bg-dark-blue text-white" name='Cancel'>Cancel</button>
-            </div>
-        </form>
+        <section className="comment">
+            <form onSubmit={(e)=> {handleSubmit(e);}} className="newcomment-grid">
+                <img src={staticAsset(currentUser.image.webp.slice(1))} 
+                    alt={'avatar of ' + currentUser.username} 
+                    className="avatar comment-header"/>
+                <label htmlFor="reply-comment" className="sr-only">Reply to Comment</label>
+                <textarea id='reply-comment' 
+                    className="comment-content fg-grayish-blue"
+                    rows={5} cols={30}
+                    value={message}
+                    onChange={handleChange}
+                >                
+                </textarea>
+                <div className="action-buttons flex">
+                    <button className="rounded-button bg-moderate-blue text-white" name='Confirm'>Reply</button>
+                    <button className="rounded-button bg-dark-blue text-white" name='Cancel'>Cancel</button>
+                </div>
+            </form>
+        </section>
     )
 }
