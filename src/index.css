@@ -26,20 +26,32 @@
 .bg-moderate-blue {
   background-color: var(--color-moderate-blue);
 }
+.bg-light-grayish-blue {
+  background-color: var(--color-light-grayish-blue);
+}
 .bg-very-light-gray {
   background-color: var(--color-very-light-gray);
 }
 .bg-grayish-blue {
   background-color: var(--color-grayish-blue);
 }
+.bg-dark-blue {
+  background-color: var(--color-dark-blue);
+}
 .bg-soft-red {
   background-color: var(--color-soft-red);
+}
+.fg-grayish-blue {
+  color: var(--color-grayish-blue);
 }
 .fg-light-grayish-blue {
   color: var(--color-light-grayish-blue);
 }
 .fg-moderate-blue {
   color: var(--color-moderate-blue);
+}
+.fg-dark-blue {
+  color: var(--color-dark-blue);
 }
 .fg-soft-red {
   color: var(--color-soft-red);

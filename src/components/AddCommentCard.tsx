@@ -35,19 +35,21 @@ export default function AddCommentCard(): React.JSX.Element {
 
     return (
         <section className="comment">
-            <form onSubmit={handleSubmit} className="card-grid">
+            <form onSubmit={handleSubmit} className="newcomment-grid">
                 <img src={staticAsset(currentUser.image.webp.slice(1))} 
                     alt={'avatar of ' + currentUser.username} 
                     className="avatar comment-header"/>
-                <label htmlFor="add-comment" className="sr-only">Edit Comment</label>
-                <textarea id='add-comment' 
-                    className="comment-content"
+                <label htmlFor="comment-content" className="sr-only">Edit Comment</label>
+                <textarea id='comment-content' 
+                    className="comment-content fg-grayish-blue"
                     rows={5} cols={30} 
                     value={message}
                     onChange={handleChange}>                
                 </textarea>
-                <button className="round-button bg-soft-red text-white" name="Confirm">Send</button>
-                <button className="round-button bg-grayish-blue text-white" name="Cancel">Cancel</button>
+                <div className="action-buttons flex">
+                    <button className="rounded-button bg-moderate-blue text-white" name="Confirm">Send</button>
+                    <button className="rounded-button bg-dark-blue text-white" name="Cancel">Cancel</button>
+                </div>
             </form>
         </section>
     )

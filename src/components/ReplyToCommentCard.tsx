@@ -34,7 +34,7 @@ export default function ReplyToCommentCard({comment, setReplyToComment}:
                 replyingTo: comment.user
             };
             setNextId(prev => prev + 1);
-            
+
             setComments(prev=> updateCommentRecursively(prev, comment, (c)=>{
                 return {...c, replies: [...c.replies, reply]}
             }));
@@ -52,8 +52,10 @@ export default function ReplyToCommentCard({comment, setReplyToComment}:
                 onChange={handleChange}
             >                
             </textarea>
-            <button className="px-4" name='Confirm'>Reply</button>
-            <button className="px-4" name='Cancel'>Cancel</button>
+            <div className="action-buttons">
+                <button className="rounded-button bg-moderate-blue text-white" name='Confirm'>Reply</button>
+                <button className="rounded-button bg-dark-blue text-white" name='Cancel'>Cancel</button>
+            </div>
         </form>
     )
 }

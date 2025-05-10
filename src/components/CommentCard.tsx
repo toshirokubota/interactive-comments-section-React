@@ -44,17 +44,17 @@ export default function CommentCard({comment, currentUser}:
                         alt={'avatar of ' + comment.user.username}
                         className="avatar"
                     />
-                    <span className="px-4">{comment.user.username}</span>
+                    <span className="px-4 fg-dark-blue font-medium">{comment.user.username}</span>
                     {comment.user.username === currentUser.username &&
                         <span
                             className="bg-moderate-blue text-white h-6 px-2 rounded-md">
                             you
                         </span>
                     }
-                    <span className="px-4">{comment.createdAt}</span>
+                    <span className="px-4 fg-grayish-blue">{comment.createdAt}</span>
                 </div>
 
-                <div>
+                <div className='action-buttons'>
                     {comment.user.username === currentUser.username ? 
                         editComment ?
                             <>
@@ -88,18 +88,18 @@ export default function CommentCard({comment, currentUser}:
                             </>
                         
                         :
-                        <span className="fg-moderate-blue px-4" onClick={() => setReplyToComment(true)}>
-                        <img src={staticAsset('/images/icon-reply.svg')} alt="reply icon" 
-                            className="icon"
-                        />
-                        Reply
-                    </span>
+                        <button className="fg-moderate-blue px-4" onClick={() => setReplyToComment(true)}>
+                            <img src={staticAsset('/images/icon-reply.svg')} alt="reply icon" 
+                                className="icon"/>
+                            Reply
+                        </button>
                 }
                 </div>
                 <textarea 
-                    className="comment-content" 
+                    className="comment-content fg-grayish-blue" 
                     disabled={!editComment}
                     value={message}
+                    rows={5}
                     onChange={handleChange}>
                 </textarea>
             </div>

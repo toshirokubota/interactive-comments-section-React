@@ -8,9 +8,39 @@ img.avatar {
   height: 32px;
 }
 
-.round-button {
+.rounded-button {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+}
+
+.rounded-button.bg-soft-red:hover, .rounded-button.bg-soft-red:focus {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.rounded-button.bg-moderate-blue:hover, .rounded-button.bg-moderate-blue:focus {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.rounded-button.bg-dark-blue:hover, .rounded-button.bg-dark-blue:focus {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+button.fg-soft-red:hover, button.fg-soft-red:focus {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+button.fg-moderate-blue:hover, button.fg-moderate-blue:focus {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+button.icon.fg-moderate-blue:hover, button.icon.fg-moderate-blue:focus {
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 .comment {
@@ -25,6 +55,7 @@ img.avatar {
   padding: 0.5rem;
   background-color: white;
   border-radius: 0.5rem;
+  gap: 1rem;
 }
 .card-grid .updownvoter {
   grid-column: 1/2;
@@ -36,7 +67,7 @@ img.avatar {
   display: flex;
   align-items: center;
 }
-.card-grid .action-icons {
+.card-grid .action-buttons {
   grid-column: 2/3;
   grid-row: 3/4;
   margin-left: auto;
@@ -44,6 +75,29 @@ img.avatar {
 .card-grid .comment-content {
   grid-column: 1/3;
   grid-row: 2/3;
+}
+
+.newcomment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  gap: 1rem;
+}
+.newcomment-grid .avatar {
+  grid-row: 2/3;
+  grid-column: 1/2;
+}
+.newcomment-grid .comment-content {
+  grid-row: 1/2;
+  grid-column: 1/3;
+}
+.newcomment-grid .action-buttons {
+  grid-row: 2/3;
+  grid-column: 2/3;
 }
 
 .lightbox {
@@ -56,4 +110,52 @@ img.avatar {
   height: 100%;
   background-color: rgba(50, 50, 50, 0.5);
   z-index: 2;
+}
+
+@media only screen and (min-width: 640px) {
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(2, auto);
+  }
+  .card-grid .updownvoter {
+    flex-direction: column;
+    align-self: center;
+    padding-block: 0.5rem;
+    grid-column: 1/2;
+    grid-row: 1/3;
+  }
+  .card-grid .comment-header {
+    grid-column: 2/3;
+    grid-row: 1/2;
+    display: flex;
+    align-items: center;
+  }
+  .card-grid .action-buttons {
+    grid-column: 3/4;
+    grid-row: 1/2;
+    margin-left: auto;
+  }
+  .card-grid .comment-content {
+    grid-column: 2/4;
+    grid-row: 2/3;
+  }
+  .newcomment-grid {
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(2, auto);
+  }
+  .newcomment-grid .avatar {
+    grid-row: 1/2;
+    grid-column: 1/2;
+  }
+  .newcomment-grid .comment-content {
+    grid-row: 1/3;
+    grid-column: 2/3;
+  }
+  .newcomment-grid .action-buttons {
+    grid-row: 1/3;
+    grid-column: 3/4;
+    flex-direction: column;
+    gap: 1rem;
+  }
 }/*# sourceMappingURL=App.css.map */

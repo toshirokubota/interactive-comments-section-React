@@ -44,8 +44,10 @@ export default function EditCommentCard({comment, setEditComment}:
                 value={message}
                 onChange={handleChange}>                
             </textarea>
-            <button className="px-4" name="Confirm">Update</button>
-            <button className="px-4" name="Cancel">Cancel</button>
+            <div className="action-buttons">
+                <button className="px-4" name="Confirm">Update</button>
+                <button className="px-4" name="Cancel">Cancel</button>
+            </div>
         </form>
     )
 }
