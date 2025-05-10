@@ -59,13 +59,13 @@
 
 body {
   margin: 0;
-  display: grid;
-  place-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  max-width: 800px;
 } 
 #root {
-  margin-inline: auto;
+  max-width: 800px;
 }
 

@@ -120,12 +120,13 @@ export default function CommentCard({comment, currentUser}:
                     //     rows={5}
                     //     onChange={handleChange}>
                     // </textarea>
-                    <p className="comment-content fg-grayish-blue"
+                    <p className="comment-content fg-grayish-blue border-b rounded-md"
                         contentEditable={true}>
-                        {styleMessage(message)}
+                        {message}
                     </p>
                     :
-                    <p className="comment-content fg-grayish-blue">
+                    <p className="comment-content fg-grayish-blue"
+                        contentEditable={false}>
                         {styleMessage(message)}
                     </p>
                 }
