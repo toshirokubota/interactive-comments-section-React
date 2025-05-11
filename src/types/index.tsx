@@ -2,7 +2,7 @@
 export type CommentType = {
     id: number,
     content: string,
-    createdAt: string,
+    createdAt: number,
     score: number,
     user: UserType,
     replies: CommentType[],

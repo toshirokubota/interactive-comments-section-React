@@ -14,16 +14,8 @@ export default function DeleteConfirmationModal({comment, setDeleteComment}
 
     function deleteComment(comment: CommentType) {
         setDeleteComment(false);
-        setComments(prev => updateCommentArrayRecursively(prev, comment, (arr) => arr.filter(a => a != comment)));
-        //     const arr = recursiveSearchOfContainingArray(prev, comment);
-        //     const idx = arr.findIndex(x => x === comment);
-        //     if(idx >= 0) {
-        //         console.log('delete: find the containing array', arr);
-        //         arr.splice(idx, 1);
-        //         return [...prev];
-        //     }
-        //     else return prev;
-        // });
+        setComments(prev => updateCommentArrayRecursively(
+            prev, comment, (arr) => arr.filter(a => a != comment)));
     }
     return (
         <div className="lightbox">

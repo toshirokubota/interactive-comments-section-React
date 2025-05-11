@@ -7,10 +7,10 @@ export function staticAsset(assetName: string): string {
 
 
 /*
-Visit each comment (nested replies included) recursively.
+Visit each item in COMMENTS and the nested replies recursively and perform some action given by the CALLBACK.
 */
 export function recursiveVisits(comments: CommentType[], 
-    callback: (comment: CommentType)=> void): void {
+    callback: (comment: CommentType)=> any): any {
     for(let c of comments) {
         callback(c);
         if(c.replies && c.replies.length > 0) {
@@ -47,6 +47,10 @@ export const updateCommentArrayRecursively = (comments: CommentType[],
     );
 };
 
+/*
+From JSON data, collect CURRENTUSER, USERS, and COMMENTS. Replace each user description to the 
+correspoinding USER object.
+*/
 export const normalizeData = (data: any): 
     {users: UserType[], comments: CommentType[], currentUser: UserType} => {
     //get all users
@@ -59,28 +63,20 @@ export const normalizeData = (data: any):
         }
     });
 
-    //normalize comment. done recursively
-    const normalizeComment = (comment: any):CommentType => {
-        const username = comment?.user?.username;
-        
-        let newcomment:CommentType = {...comment};
-        if(!newcomment.replies) newcomment.replies = [];
-        if(!newcomment.replyingTo) newcomment.replyingTo= null;
-        let user0 = users.find(user => user.username === username);
-        if(user0) newcomment.user = user0;
-        if(comment.replies) {
-            for(let i = 0; i < comment.replies.length; i++) {
-                let reply = comment.replies[i];
-                newcomment.replies[i] = normalizeComment(reply);
-            }
-        }
-        return newcomment;
-    }
-    const comments: CommentType[] = [];
-    for(let comment of data.comments) {
-        comments.push(normalizeComment(comment));
-    }
-
+    recursiveVisits(data.comments as CommentType[], (comment)=> {
+        if(!comment.replies) comment.replies = [];
+        if(!comment.replyingTo) comment.replyingTo= null;
+        const username = comment.user.username;
+        let found = users.find(user => user.username === username);
+        if(found) comment.user = found;
+        const replyTo = comment.replyingTo?.username || comment.replyingTo;
+        let found2 = users.find(user => user.username === replyTo);
+        if(found2) comment.replyingTo = found2;
+        //comment.createdAt = Date.now();
+    })
+    const comments: CommentType[] = (data.comments as CommentType[]).map(c => ({...c}));
+    comments.sort((a, b) => b.score - a.score); //sort by the score
+ 
     return {users, comments, currentUser};
 }
 

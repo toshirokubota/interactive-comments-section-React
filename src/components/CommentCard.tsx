@@ -5,6 +5,7 @@ import UpDownVoter from "./UpDownVoter";
 import { CommentContext } from "../App";
 import ReplyToCommentCard from "./ReplyToCommentCard";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import { formatDistanceToNow } from "date-fns";
 
 export default function CommentCard({comment, currentUser}:
     {
@@ -19,20 +20,19 @@ export default function CommentCard({comment, currentUser}:
     const [replayToComment, setReplyToComment] = useState<boolean>(false);
     const [message, setMessage] = useState<string>(comment.content);
     useEffect(()=>{
-        setComments(prev=> updateCommentRecursively(prev, comment, (c)=>{
-            return {...c, score:count}
-        }));
+        setComments(prev=> {
+            let updated = updateCommentRecursively(prev, comment, (c)=>{
+                return {...c, score:count}
+            });
+            updated.sort((a,b)=>b.score - a.score); //sort by the score
+            return updated;
+        });
     }, [count])
 
     function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
         const value = (event.target as HTMLTextAreaElement).value;
         setMessage(value);
     }
-    // function handleChange(event: React.ChangeEvent<HTMLParagraphElement>) {
-    //     const value = (event.target as HTMLParagraphElement).innerText;
-    //     console.log('handleChange: ', value);
-    //     setMessage(value);
-    // }
     function updateComment() {
         setComments(prev=> updateCommentRecursively(prev, comment, (c)=>{
             return {...c, content:message}
@@ -45,7 +45,6 @@ export default function CommentCard({comment, currentUser}:
             const searchStr:string = '@' + replyingTo.username;
             const idx: number = message.indexOf(searchStr);
             if(idx >= 0) {
-                //console.log('styleMessage Ok', comment);
                 return (
                     <>
                         <span>{message.slice(0,idx)}</span>
@@ -54,7 +53,6 @@ export default function CommentCard({comment, currentUser}:
                     </>
                 );
             } else {
-                //console.log('styleMessage Fail', comment);
                 return (
                     <>
                         <span className="fg-moderate-blue">{searchStr} </span>
@@ -82,7 +80,9 @@ export default function CommentCard({comment, currentUser}:
                             you
                         </span>
                     }
-                    <span className="px-4 fg-grayish-blue">{comment.createdAt}</span>
+                    <span className="px-4 fg-grayish-blue">
+                        {formatDistanceToNow(comment.createdAt, { addSuffix: true })}
+                    </span>
                 </div>
 
                 <div className='action-buttons'>
@@ -127,11 +127,6 @@ export default function CommentCard({comment, currentUser}:
                 }
                 </div>
                 {editComment ? 
-                    // <p className="comment-content fg-grayish-blue border-b rounded-md"
-                    //     contentEditable={true}
-                    //     onInput={handleChange}>
-                    //     {message}
-                    // </p>
                         <textarea
                             className="comment-content fg-grayish-blue"
                             value={message}
@@ -147,14 +142,6 @@ export default function CommentCard({comment, currentUser}:
             </div>
             {deleteComment && <DeleteConfirmationModal comment={comment} setDeleteComment={setDeleteComment}/>}
             {replayToComment && <ReplyToCommentCard comment={comment} setReplyToComment={setReplyToComment}/>}
-
-            {/* <div>
-            {
-                comment.replies.map(reply =>
-                    <CommentCard key={reply.id} comment={reply} currentUser={currentUser}/>
-                )
-            } 
-            </div>*/}
         </section>
     )
 }

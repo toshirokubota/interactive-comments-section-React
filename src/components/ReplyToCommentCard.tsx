@@ -18,18 +18,18 @@ export default function ReplyToCommentCard({comment, setReplyToComment}:
     }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        console.log("inside handleSubmit", event);
+        //console.log("inside handleSubmit", event);
         event.preventDefault();
 
-        const button = event.nativeEvent.submitter as HTMLButtonElement;
-        //const name = (event.nativeEvent.submitter as HTMLButtonElement).name;
+        const submitEvent = event.nativeEvent as SubmitEvent;
+        const button = submitEvent.submitter as HTMLButtonElement;
         if(button.name === 'Confirm' ) {
             const reply: CommentType = {
                 id: nextId,
                 user: currentUser, 
                 content: message, 
                 score: 0,
-                createdAt: 'Now',
+                createdAt: Date.now(),
                 replies: [],
                 replyingTo: comment.user
             };
@@ -43,8 +43,9 @@ export default function ReplyToCommentCard({comment, setReplyToComment}:
     }
 
     return (
-        <section className="comment">
-            <form onSubmit={(e)=> {handleSubmit(e);}} className="newcomment-grid">
+        <section className="comment indent">
+            <form onSubmit={(e)=> {handleSubmit(e);}} 
+                className="newcomment-grid indent">
                 <img src={staticAsset(currentUser.image.webp.slice(1))} 
                     alt={'avatar of ' + currentUser.username} 
                     className="avatar comment-header"/>

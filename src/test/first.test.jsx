@@ -4,14 +4,11 @@ import App from '../App';
 describe('App', () => {
   it('renders', () => {
     render(<App />);
-
-    expect(screen.queryByText('Hello World!')).toBeVisible();
+    //buttons for new comment
+    expect(screen.queryByText('Send')).toBeVisible();
+    expect(screen.queryByText('Cancel')).toBeVisible();
   });
 });
 
-describe('my first test', () => {
-  it('works', () => {
-    expect(true);
-  });
-});
+
 

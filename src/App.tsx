@@ -75,7 +75,7 @@ function App(): React.JSX.Element {
   return (
     <>
       <CommentContext.Provider value={{comments, setComments, users, setUsers, currentUser, setCurrentUser, nextId, setNextId}}>
-        <CommentsContainer />
+        <CommentsContainer/>
       </CommentContext.Provider>
     </>
   )
