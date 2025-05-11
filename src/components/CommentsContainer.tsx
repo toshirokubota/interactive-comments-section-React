@@ -3,17 +3,22 @@ import { CommentContext } from '../App';
 import type { CommentContextType } from '../types';
 import CommentCard from './CommentCard';
 import AddCommentCard from './AddCommentCard';
+import { recursiveVisits } from '../libs';
 
 
 export default function CommentsContainer(): React.JSX.Element {
     const {comments, currentUser}=useContext<CommentContextType>(CommentContext);
 
+    const cards: React.JSX.Element[]= [];
+    recursiveVisits(comments, (comment) => {
+        cards.push(<CommentCard key={comment.id} comment={comment} currentUser={currentUser} />);
+    });
+
+
     return (
         <div>
             {
-                comments.map(comment => 
-                    <CommentCard key={comment.id} comment={comment} currentUser={currentUser} />
-                )
+                cards
             }
             <AddCommentCard />
         </div>

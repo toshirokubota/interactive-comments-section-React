@@ -28,6 +28,11 @@ export default function CommentCard({comment, currentUser}:
         const value = (event.target as HTMLTextAreaElement).value;
         setMessage(value);
     }
+    // function handleChange(event: React.ChangeEvent<HTMLParagraphElement>) {
+    //     const value = (event.target as HTMLParagraphElement).innerText;
+    //     console.log('handleChange: ', value);
+    //     setMessage(value);
+    // }
     function updateComment() {
         setComments(prev=> updateCommentRecursively(prev, comment, (c)=>{
             return {...c, content:message}
@@ -40,6 +45,7 @@ export default function CommentCard({comment, currentUser}:
             const searchStr:string = '@' + replyingTo.username;
             const idx: number = message.indexOf(searchStr);
             if(idx >= 0) {
+                //console.log('styleMessage Ok', comment);
                 return (
                     <>
                         <span>{message.slice(0,idx)}</span>
@@ -47,14 +53,22 @@ export default function CommentCard({comment, currentUser}:
                         <span>{message.slice(idx + searchStr.length)}</span>
                     </>
                 );
+            } else {
+                //console.log('styleMessage Fail', comment);
+                return (
+                    <>
+                        <span className="fg-moderate-blue">{searchStr} </span>
+                        <span>{message}</span>
+                    </>
+                )
             }
         } 
         return <span>{message}</span>;
     }
 
     return (
-        <section className="comment">
-            <div className="card-grid">
+        <section className={"comment " + (comment.replyingTo ? 'indent': '')}>
+            <div className={"card-grid " + (comment.replyingTo ? 'indent': '')}>
                 <UpDownVoter count={count} setCount={setCount} />
                 <div className="comment-header flex">
                     <img src={staticAsset(comment.user.image.webp.slice(1))} 
@@ -113,34 +127,34 @@ export default function CommentCard({comment, currentUser}:
                 }
                 </div>
                 {editComment ? 
-                    // <textarea 
-                    //     className="comment-content fg-grayish-blue" 
-                    //     //disabled={!editComment}
-                    //     value={message}
-                    //     rows={5}
-                    //     onChange={handleChange}>
-                    // </textarea>
-                    <p className="comment-content fg-grayish-blue border-b rounded-md"
-                        contentEditable={true}>
-                        {message}
-                    </p>
+                    // <p className="comment-content fg-grayish-blue border-b rounded-md"
+                    //     contentEditable={true}
+                    //     onInput={handleChange}>
+                    //     {message}
+                    // </p>
+                        <textarea
+                            className="comment-content fg-grayish-blue"
+                            value={message}
+                            rows={4}
+                            onChange={handleChange}
+                        >
+                        </textarea>
                     :
-                    <p className="comment-content fg-grayish-blue"
-                        contentEditable={false}>
-                        {styleMessage(message)}
-                    </p>
+                        <p className="comment-content fg-grayish-blue min-h-24 overflow-hidden">
+                            {styleMessage(message)}
+                        </p>
                 }
             </div>
             {deleteComment && <DeleteConfirmationModal comment={comment} setDeleteComment={setDeleteComment}/>}
             {replayToComment && <ReplyToCommentCard comment={comment} setReplyToComment={setReplyToComment}/>}
 
-            <div>
+            {/* <div>
             {
                 comment.replies.map(reply =>
                     <CommentCard key={reply.id} comment={reply} currentUser={currentUser}/>
                 )
-            }
-            </div>
+            } 
+            </div>*/}
         </section>
     )
 }
