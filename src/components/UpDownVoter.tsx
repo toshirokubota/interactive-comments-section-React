@@ -10,7 +10,7 @@ export default function UpDownVoter({count, setCount}:
         <div className="updownvoter flex flex-row md:flex-col gap-4 items-center px-2 w-fit rounded-md bg-very-light-gray">
             
             <button 
-                id="count-inc-button"
+                id="count-inc-button"  aria-label="score increment button"
                 className="fg-moderate-blue icon"
                 onClick={()=>setCount(prev => prev + 1)}
                 >
@@ -21,7 +21,7 @@ export default function UpDownVoter({count, setCount}:
             </button>
             <span className="fg-moderate-blue font-medium text-base">{count}</span>
             <button 
-                id="count-dec-button"
+                id="count-dec-button" aria-label="score decrement button"
                 className="fg-moderate-blue icon"                     
                 onClick={()=>setCount(prev => prev - 1)}
             >
