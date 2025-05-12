@@ -25,7 +25,7 @@ export default function DeleteConfirmationModal({comment, setDeleteComment}
                     Are you sure you want to delete this comment? This will remove the comment and can’t be undone.
                 </p>
                 <div className="flex items-center justify-between">
-                    <button onClick={()=>setDeleteComment(false)} className="rounded-button bg-grayish-blue text-white">No Cancel</button>
+                    <button onClick={()=>setDeleteComment(false)} className="rounded-button bg-dark-blue text-white">No Cancel</button>
                     <button onClick={()=>deleteComment(comment)}  className="rounded-button bg-soft-red text-white">Yes Delete</button>
                 </div>
             </div>

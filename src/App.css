@@ -23,9 +23,28 @@ img.avatar {
   cursor: pointer;
 }
 
+.rounded-button.bg-moderate-blue:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
 .rounded-button.bg-dark-blue:hover, .rounded-button.bg-dark-blue:focus {
   opacity: 0.5;
   cursor: pointer;
+}
+
+.rounded-button.bg-dark-blue:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.rounded-button.bg-grayish-blue:hover, .rounded-button.bg-grayish-blue:focus {
+  opacity: 0.5;
+  cursor: pointer;
+}
+.rounded-button.bg-grayish-blue:hover:disabled, .rounded-button.bg-grayish-blue:focus:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
 }
 
 button.fg-soft-red:hover, button.fg-soft-red:focus {
@@ -58,36 +77,36 @@ textarea {
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(2, auto);
-  grid-template-rows: repeat(3, auto);
+  grid-template-columns: 1fr;
+  grid-template-rows: 2rem auto 2rem;
   margin: 0.5rem;
   padding: 0.5rem;
   background-color: white;
   border-radius: 0.5rem;
-  gap: 1rem;
+  gap: 0.5rem;
+  width: calc(100% - 1rem);
 }
 .card-grid.indent {
   margin-left: 2rem;
   margin-block: 0rem;
-}
-.card-grid .updownvoter {
-  grid-column: 1/2;
-  grid-row: 3/4;
+  width: calc(100% - 2.5rem);
 }
 .card-grid .comment-header {
-  grid-column: 1/3;
+  grid-column: 1/2;
   grid-row: 1/2;
   display: flex;
   align-items: center;
 }
-.card-grid .action-buttons {
-  grid-column: 2/3;
-  grid-row: 3/4;
-  margin-left: auto;
-}
 .card-grid .comment-content {
-  grid-column: 1/3;
+  grid-column: 1/2;
   grid-row: 2/3;
+}
+.card-grid .flex-wrapper {
+  grid-column: 1/2;
+  grid-row: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .newcomment-grid {
@@ -145,9 +164,14 @@ textarea {
     display: grid;
     grid-template-columns: 2rem auto auto;
     grid-template-rows: 2rem auto;
+    padding: 1rem;
   }
   .card-grid.indent {
     margin-left: 4rem;
+    width: calc(100% - 4.5rem);
+  }
+  .card-grid .flex-wrapper {
+    display: contents;
   }
   .card-grid .updownvoter {
     flex-direction: column;

@@ -5,7 +5,7 @@ import UpDownVoter from "./UpDownVoter";
 import { CommentContext } from "../App";
 import ReplyToCommentCard from "./ReplyToCommentCard";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNowStrict } from "date-fns";
 
 export default function CommentCard({comment, currentUser}:
     {
@@ -67,64 +67,65 @@ export default function CommentCard({comment, currentUser}:
     return (
         <section className={"comment " + (comment.replyingTo ? 'indent': '')}>
             <div className={"card-grid " + (comment.replyingTo ? 'indent': '')}>
-                <UpDownVoter count={count} setCount={setCount} />
-                <div className="comment-header flex">
+                <div className="comment-header flex justify-evenly">
                     <img src={staticAsset(comment.user.image.webp.slice(1))} 
                         alt={'avatar of ' + comment.user.username}
                         className="avatar"
                     />
-                    <span className="px-4 fg-dark-blue font-medium">{comment.user.username}</span>
+                    <span className="fg-dark-blue font-medium">{comment.user.username}</span>
                     {comment.user.username === currentUser.username &&
                         <span
                             className="bg-moderate-blue text-white h-6 px-2 rounded-md">
                             you
                         </span>
                     }
-                    <span className="px-4 fg-grayish-blue">
-                        {formatDistanceToNow(comment.createdAt, { addSuffix: true })}
+                    <span className="fg-grayish-blue text-sm">
+                        {formatDistanceToNowStrict(comment.createdAt, { addSuffix: true })}
                     </span>
                 </div>
-
-                <div className='action-buttons'>
-                    {comment.user.username === currentUser.username ? 
-                        editComment ?
-                            <>
-                                <button className="fg-soft-red px-4" onClick={() => {updateComment(); setEditComment(false);}}>
-                                    <img src={staticAsset('/images/icon-delete.svg')} alt="delete icon" 
-                                        className="icon"
+                <div className="flex-wrapper">
+                    <UpDownVoter count={count} setCount={setCount} />
+                    <div className='action-buttons'>
+                        {comment.user.username === currentUser.username ? 
+                            editComment ?
+                                <>
+                                    <button className="fg-soft-red px-4" onClick={() => {updateComment(); setEditComment(false);}}>
+                                        <img src={staticAsset('/images/icon-delete.svg')} alt="delete icon" 
+                                            className="icon"
+                                            />
+                                        Update
+                                    </button>
+                                    <button className="fg-moderate-blue px-4" onClick={() => setEditComment(false)}>
+                                        <img src={staticAsset('/images/icon-edit.svg')} alt="edit icon" 
+                                            className="icon"
                                         />
-                                    Update
-                                </button>
-                                <button className="fg-moderate-blue px-4" onClick={() => setEditComment(false)}>
-                                    <img src={staticAsset('/images/icon-edit.svg')} alt="edit icon" 
-                                        className="icon"
-                                    />
-                                    Cancel
-                                </button>
-                            </>
+                                        Cancel
+                                    </button>
+                                </>
+                                :
+                                <>
+                                    <button className="fg-soft-red px-4" onClick={() => setDeleteComment(true)}>
+                                        <img src={staticAsset('/images/icon-delete.svg')} alt="delete icon" 
+                                            className="icon"
+                                            />
+                                        Delete
+                                    </button>
+                                    <button className="fg-moderate-blue px-4" onClick={() => setEditComment(true)}>
+                                        <img src={staticAsset('/images/icon-edit.svg')} alt="edit icon" 
+                                            className="icon"
+                                        />
+                                        Edit
+                                    </button>
+                                </>
+                            
                             :
-                            <>
-                                <button className="fg-soft-red px-4" onClick={() => setDeleteComment(true)}>
-                                    <img src={staticAsset('/images/icon-delete.svg')} alt="delete icon" 
-                                        className="icon"
-                                        />
-                                    Delete
-                                </button>
-                                <button className="fg-moderate-blue px-4" onClick={() => setEditComment(true)}>
-                                    <img src={staticAsset('/images/icon-edit.svg')} alt="edit icon" 
-                                        className="icon"
-                                    />
-                                    Edit
-                                </button>
-                            </>
-                        
-                        :
-                        <button className="fg-moderate-blue px-4" onClick={() => setReplyToComment(true)}>
-                            <img src={staticAsset('/images/icon-reply.svg')} alt="reply icon" 
-                                className="icon"/>
-                            Reply
-                        </button>
-                }
+                            <button className="fg-moderate-blue px-4" onClick={() => setReplyToComment(true)}>
+                                <img src={staticAsset('/images/icon-reply.svg')} alt="reply icon" 
+                                    className="icon"/>
+                                Reply
+                            </button>
+                    }
+                    </div>
                 </div>
                 {editComment ? 
                         <textarea
@@ -135,7 +136,7 @@ export default function CommentCard({comment, currentUser}:
                         >
                         </textarea>
                     :
-                        <p className="comment-content fg-grayish-blue min-h-24 overflow-hidden">
+                        <p className="comment-content fg-grayish-blue min-h-24 w-full">
                             {styleMessage(message)}
                         </p>
                 }

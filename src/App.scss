@@ -2,7 +2,6 @@
 img.icon {
     display: inline-block;
     width: 12px;
-    //height: 12px;
 }
 img.avatar {
     width: 32px;
@@ -13,19 +12,33 @@ img.avatar {
     border-radius: 0.5rem;
 }
 .rounded-button.bg-soft-red:hover, .rounded-button.bg-soft-red:focus {
-    //background-color: var(--color-pale-red);
     opacity: 0.5;
     cursor: pointer;
 }
+
 .rounded-button.bg-moderate-blue:hover, .rounded-button.bg-moderate-blue:focus {
-    //background-color: var(--color-light-grayish-blue);
     opacity: 0.5;
     cursor: pointer;
+}
+.rounded-button.bg-moderate-blue:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;    
 }
 .rounded-button.bg-dark-blue:hover, .rounded-button.bg-dark-blue:focus {
-    //background-color: var(--color-grayish-blue);
     opacity: 0.5;
     cursor: pointer;
+}
+.rounded-button.bg-dark-blue:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;    
+}
+.rounded-button.bg-grayish-blue:hover, .rounded-button.bg-grayish-blue:focus {
+    opacity: 0.5;
+    cursor: pointer;
+    &:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;    
+    }
 }
 button.fg-soft-red:hover, button.fg-soft-red:focus {
     cursor: pointer;
@@ -54,37 +67,46 @@ textarea {
 }
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(2, auto);
-    grid-template-rows: repeat(3, auto);
+    grid-template-columns: 1fr;
+    grid-template-rows: 2rem auto 2rem;
     margin: 0.5rem;
     padding: 0.5rem;
     background-color: white;
     border-radius: 0.5rem;
-    gap: 1rem;
+    gap: 0.5rem;
+    width: calc(100% - 1rem);
 
     &.indent {
         margin-left: 2rem;
         margin-block: 0rem;
+        width: calc(100% - 2.5rem);
     }
 
-    .updownvoter {
-        grid-column: 1/2;
-        grid-row: 3/4;
-    }
     .comment-header {
-        grid-column: 1/3;
+        grid-column: 1/2;
         grid-row: 1/2;
         display: flex;
         align-items: center;
     }
-    .action-buttons {
-        grid-column: 2/3;
-        grid-row: 3/4;
-        margin-left: auto;
-    }
+    // .updownvoter {
+    //     grid-column: 1/2;
+    //     grid-row: 3/4;
+    // }
+    // .action-buttons {
+    //     grid-column: 2/3;
+    //     grid-row: 3/4;
+    //     margin-left: auto;
+    // }
     .comment-content {
-        grid-column: 1/3;
+        grid-column: 1/2;
         grid-row: 2/3;
+    }
+    .flex-wrapper {
+        grid-column: 1/2;
+        grid-row: 3/4;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 }
 .newcomment-grid {
@@ -142,14 +164,16 @@ textarea {
         display: grid;
         grid-template-columns: 2rem auto auto;
         grid-template-rows: 2rem auto;
+        padding: 1rem;
         &.indent {
             margin-left: 4rem;
+            width: calc(100% - 4.5rem);
         }
-            
+        .flex-wrapper {
+            display: contents;
+        } 
         .updownvoter {
             flex-direction: column;
-            //justify-content: center;
-            //justify-self: center;
             align-self: center;
             padding-block: 0.5rem;
             grid-column: 1/2;

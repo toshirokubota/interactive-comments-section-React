@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import type { CommentContextType, CommentType } from "../types";
 import { staticAsset } from "../libs";
 import { CommentContext } from "../App";
